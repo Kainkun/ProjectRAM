@@ -16,6 +16,9 @@ public class Hydraulic : PlayerInteractableToggle
     {
         travelSpeed = (1 / travelTime) * travelDistance;
         startY = piston.localPosition.y;
+
+        if (isOn)
+            piston.localPosition = new Vector3(0, startY + travelDistance, 0);
     }
 
     public override void TurnOn()
