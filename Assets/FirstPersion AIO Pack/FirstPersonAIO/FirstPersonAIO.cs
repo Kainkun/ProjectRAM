@@ -241,6 +241,11 @@ public class FirstPersonAIO : MonoBehaviour {
     }
     public DynamicFootStep dynamicFootstep = new DynamicFootStep();
 
+    private void RandomizeFootSteps()
+    {
+        audioSource.pitch = Random.Range(0.8f, 1.1f);
+    }
+
     #endregion
 
     #endregion
@@ -624,14 +629,22 @@ public class FirstPersonAIO : MonoBehaviour {
                     {
                         if(!previousGrounded)
                         {
-                            if(dynamicFootstep.currentClipSet.Any()) { audioSource.PlayOneShot(dynamicFootstep.currentClipSet[Random.Range(0, dynamicFootstep.currentClipSet.Count)],Volume/10); }
+                            if(dynamicFootstep.currentClipSet.Any())
+                            { 
+                                audioSource.PlayOneShot(dynamicFootstep.currentClipSet[Random.Range(0, dynamicFootstep.currentClipSet.Count)],Volume/10);
+                                RandomizeFootSteps();
+                            }
                             nextStepTime = headbobCycle + 0.5f;
                         } else
                         {
                             if(headbobCycle > nextStepTime)
                             {
                                 nextStepTime = headbobCycle + 0.5f;
-                                if(dynamicFootstep.currentClipSet.Any()){ audioSource.PlayOneShot(dynamicFootstep.currentClipSet[Random.Range(0, dynamicFootstep.currentClipSet.Count)],Volume/10); }
+                                if(dynamicFootstep.currentClipSet.Any())
+                                { 
+                                    audioSource.PlayOneShot(dynamicFootstep.currentClipSet[Random.Range(0, dynamicFootstep.currentClipSet.Count)],Volume/10);
+                                    RandomizeFootSteps();
+                                }
                             }
                         }
                         previousGrounded = true;
@@ -639,7 +652,11 @@ public class FirstPersonAIO : MonoBehaviour {
                     {
                         if(previousGrounded)
                         {
-                            if(dynamicFootstep.currentClipSet.Any()){ audioSource.PlayOneShot(dynamicFootstep.currentClipSet[Random.Range(0, dynamicFootstep.currentClipSet.Count)],Volume/10); }
+                            if(dynamicFootstep.currentClipSet.Any())
+                            { 
+                                audioSource.PlayOneShot(dynamicFootstep.currentClipSet[Random.Range(0, dynamicFootstep.currentClipSet.Count)],Volume/10);
+                                RandomizeFootSteps();
+                            }
                         }
                         previousGrounded = false;
                     }
@@ -650,7 +667,11 @@ public class FirstPersonAIO : MonoBehaviour {
                     {
                         if(!previousGrounded)
                         {
-                            if(landSound){ audioSource.PlayOneShot(landSound,Volume/10); }
+                            if(landSound)
+                            { 
+                                audioSource.PlayOneShot(landSound,Volume/10);
+                                RandomizeFootSteps();
+                            }
                             nextStepTime = headbobCycle + 0.5f;
                         } else
                         {
@@ -658,7 +679,11 @@ public class FirstPersonAIO : MonoBehaviour {
                             {
                                 nextStepTime = headbobCycle + 0.5f;
                                 int n = Random.Range(0, footStepSounds.Count);
-                                if(footStepSounds.Any()){ audioSource.PlayOneShot(footStepSounds[n],Volume/10); }
+                                if(footStepSounds.Any())
+                                {
+                                    audioSource.PlayOneShot(footStepSounds[n],Volume/10);
+                                    RandomizeFootSteps();
+                                }
                                 footStepSounds[n] = footStepSounds[0];
                             }
                         }
@@ -667,7 +692,11 @@ public class FirstPersonAIO : MonoBehaviour {
                     {
                         if(previousGrounded)
                         {
-                            if(jumpSound){ audioSource.PlayOneShot(jumpSound,Volume/10); }
+                            if(jumpSound)
+                            {
+                                audioSource.PlayOneShot(jumpSound,Volume/10);
+                                RandomizeFootSteps();
+                            }
                         }
                         previousGrounded = false;
                     }
@@ -679,7 +708,11 @@ public class FirstPersonAIO : MonoBehaviour {
                 {
                     if(!previousGrounded)
                     {
-                        if(landSound) { audioSource.PlayOneShot(landSound,Volume/10); }
+                        if(landSound) 
+                        { 
+                            audioSource.PlayOneShot(landSound,Volume/10);
+                            RandomizeFootSteps();
+                        }
                         nextStepTime = headbobCycle + 0.5f;
                     } else
                     {
@@ -687,7 +720,11 @@ public class FirstPersonAIO : MonoBehaviour {
                         {
                             nextStepTime = headbobCycle + 0.5f;
                             int n = Random.Range(0, footStepSounds.Count);
-                            if(footStepSounds.Any() && footStepSounds[n] != null){ audioSource.PlayOneShot(footStepSounds[n],Volume/10);}
+                            if(footStepSounds.Any() && footStepSounds[n] != null)
+                            {
+                                audioSource.PlayOneShot(footStepSounds[n],Volume/10);
+                                RandomizeFootSteps();
+                            }
                             
                         }
                     }
@@ -696,7 +733,11 @@ public class FirstPersonAIO : MonoBehaviour {
                 {
                     if(previousGrounded)
                     {
-                        if(jumpSound) { audioSource.PlayOneShot(jumpSound,Volume/10); }
+                        if(jumpSound) 
+                        {
+                            audioSource.PlayOneShot(jumpSound,Volume/10);
+                            RandomizeFootSteps();
+                        }
                     }
                     previousGrounded = false;
                 }
