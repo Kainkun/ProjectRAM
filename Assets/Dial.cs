@@ -3,16 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rotator : PlayerInteractable
+public class Dial : PlayerInteractable
 {
-    public int currentPosition = 0;
     public int totalPositions = 4;
-    public Transform dial;
+    public int currentPosition = 0;
+    private int targetPosition;
     private float targetRotation;
+    public Transform dial;
     private Coroutine currentCoroutine;
 
-    private void Start()
+    private void Awake()
     {
+        var r = dial.localEulerAngles;
+        currentPosition %= totalPositions;
+        targetPosition = currentPosition;
+        dial.localRotation = Quaternion.Euler(r.x, r.y, currentPosition * (360f/totalPositions));
         targetRotation = dial.localEulerAngles.z % 360;
     }
 
@@ -21,18 +26,21 @@ public class Rotator : PlayerInteractable
         if(currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(CR_Rotate());
-        base.Interact();
     }
     
     IEnumerator CR_Rotate()
     {
-        targetRotation = (targetRotation + 90) % 360;
+        targetPosition = (targetPosition + 1) % totalPositions;
+        targetRotation = targetPosition * (360f / totalPositions);
         
-        while (Mathf.Abs(Mathf.DeltaAngle(dial.localEulerAngles.z,targetRotation)) > 1)
+        var r = dial.localEulerAngles;
+        while (Mathf.Abs(Mathf.DeltaAngle(dial.localEulerAngles.z,targetRotation)) > 0.1f)
         {
-            var r = dial.localEulerAngles;
             dial.localRotation = Quaternion.Euler(r.x, r.y, Mathf.MoveTowardsAngle(dial.localEulerAngles.z, targetRotation, Time.deltaTime * 360));
             yield return null;
         }
+
+        currentPosition = targetPosition;
+        base.Interact();
     }
 }

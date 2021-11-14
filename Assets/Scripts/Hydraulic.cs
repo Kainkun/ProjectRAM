@@ -23,6 +23,7 @@ public class Hydraulic : PlayerInteractableToggle
 
     public override void TurnOn()
     {
+        print("ON");
         if(currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(CR_TurnOn());
@@ -31,6 +32,7 @@ public class Hydraulic : PlayerInteractableToggle
 
     public override void TurnOff()
     {
+        print("OFF");
         if(currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(CR_TurnOff());
