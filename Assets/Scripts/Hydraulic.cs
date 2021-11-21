@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Hydraulic : PlayerInteractableToggle
 {
-    float startY;
-    public float travelDistance = 2.5f;
+    Vector3 startPosition;
+    public Vector3 travelDistance = new Vector3(0,2.5f,0);
     public float travelTime = 0.3f;
     float travelSpeed;
     public Transform piston;
@@ -14,11 +14,12 @@ public class Hydraulic : PlayerInteractableToggle
     
     private void Start()
     {
-        travelSpeed = (1 / travelTime) * travelDistance;
-        startY = piston.localPosition.y;
+        travelSpeed = (1 / travelTime) * travelDistance.magnitude;
+        
+        startPosition = piston.localPosition;
 
         if (isOn)
-            piston.localPosition = new Vector3(0, startY + travelDistance, 0);
+            piston.localPosition = travelDistance;
     }
 
     public override void TurnOn()
@@ -41,21 +42,22 @@ public class Hydraulic : PlayerInteractableToggle
     
     IEnumerator CR_TurnOn()
     {
-        while (piston.localPosition.y < startY + travelDistance)
+        //while (piston.localPosition.y < startPosition + travelDistance)
+        while (Vector3.Distance(piston.localPosition, startPosition + travelDistance) > 0.01f)
         {
-            piston.localPosition += new Vector3(0, Time.deltaTime * travelSpeed, 0);
+            piston.localPosition = Vector3.MoveTowards(piston.localPosition, startPosition + travelDistance, Time.deltaTime * travelSpeed);
             yield return null;
         }
-        piston.localPosition = new Vector3(0, startY + travelDistance, 0);
+        piston.localPosition = startPosition + travelDistance;
     }
 
     IEnumerator CR_TurnOff()
     {
-        while (piston.localPosition.y > startY)
+        while (Vector3.Distance(piston.localPosition, startPosition) > 0.01f)
         {
-            piston.localPosition -= new Vector3(0, Time.deltaTime * travelSpeed, 0);
+            piston.localPosition = Vector3.MoveTowards(piston.localPosition, startPosition, Time.deltaTime * travelSpeed);
             yield return null;
         }
-        piston.localPosition = new Vector3(0, startY, 0);
+        piston.localPosition = startPosition;
     }
 }
