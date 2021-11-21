@@ -9,10 +9,10 @@ using UnityEngine.Events;
 public class DialLock : MonoBehaviour
 {
     [System.Serializable]
-    public class DialPasswordPair
+    public struct DialPasswordPair
     {
         public Dial dial;
-        public int unlockPosition;
+        public int[] unlockPositions;
     }
 
     public DialPasswordPair[] dialPasswordPairs;
@@ -23,10 +23,7 @@ public class DialLock : MonoBehaviour
     private void Start()
     {
         foreach (DialPasswordPair dialPasswordPair in dialPasswordPairs)
-        {
             dialPasswordPair.dial.onInteract.AddListener(CheckLock);
-            dialPasswordPair.unlockPosition %= dialPasswordPair.dial.totalPositions;
-        }
 
         CheckLock();
     }
@@ -34,17 +31,32 @@ public class DialLock : MonoBehaviour
     public void CheckLock()
     {
         foreach (DialPasswordPair dialPasswordPair in dialPasswordPairs)
-            if (dialPasswordPair.dial.currentPosition != dialPasswordPair.unlockPosition)
+        {
+            bool foundCorrectPosition = false;
+            foreach (int unlockPosition in dialPasswordPair.unlockPositions)
+            {
+                if (dialPasswordPair.dial.currentPosition == unlockPosition)
+                {
+                    foundCorrectPosition = true;
+                }
+            }
+
+            if (!foundCorrectPosition)
             {
                 if (!isLocked)
                 {
                     isLocked = true;
                     onLock.Invoke();
                 }
+
                 return;
             }
+        }
 
-        isLocked = false;
-        onUnlock.Invoke();
+        if (isLocked)
+        {
+            isLocked = false;
+            onUnlock.Invoke();
+        }
     }
 }
