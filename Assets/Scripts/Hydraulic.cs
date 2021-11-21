@@ -10,17 +10,17 @@ public class Hydraulic : MonoBehaviour
     public Vector3 endPosition = new Vector3(0,2.5f,0);
     public float travelTime = 0.3f;
     float travelSpeed;
-    public Transform piston;
+    public Transform pistonTransform;
     private Coroutine currentCoroutine;
     
     private void Start()
     {
-        travelSpeed = (1 / travelTime) * (startPosition - endPosition).magnitude;
+        startPosition = pistonTransform.localPosition;
         
-        startPosition = piston.localPosition;
+        travelSpeed = (1 / travelTime) * (startPosition - endPosition).magnitude;
 
         if (isOn)
-            piston.localPosition = endPosition;
+            pistonTransform.localPosition = endPosition;
     }
 
     public void Toggle()
@@ -48,21 +48,21 @@ public class Hydraulic : MonoBehaviour
     
     IEnumerator CR_TurnOn()
     {
-        while (Vector3.Distance(piston.localPosition,endPosition) > 0.01f)
+        while (Vector3.Distance(pistonTransform.localPosition,endPosition) > 0.001f)
         {
-            piston.localPosition = Vector3.MoveTowards(piston.localPosition,endPosition, Time.deltaTime * travelSpeed);
+            pistonTransform.localPosition = Vector3.MoveTowards(pistonTransform.localPosition,endPosition, Time.deltaTime * travelSpeed);
             yield return null;
         }
-        piston.localPosition = endPosition;
+        pistonTransform.localPosition = endPosition;
     }
 
     IEnumerator CR_TurnOff()
     {
-        while (Vector3.Distance(piston.localPosition, startPosition) > 0.01f)
+        while (Vector3.Distance(pistonTransform.localPosition, startPosition) > 0.001f)
         {
-            piston.localPosition = Vector3.MoveTowards(piston.localPosition, startPosition, Time.deltaTime * travelSpeed);
+            pistonTransform.localPosition = Vector3.MoveTowards(pistonTransform.localPosition, startPosition, Time.deltaTime * travelSpeed);
             yield return null;
         }
-        piston.localPosition = startPosition;
+        pistonTransform.localPosition = startPosition;
     }
 }

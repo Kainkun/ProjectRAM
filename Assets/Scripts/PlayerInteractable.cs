@@ -11,7 +11,7 @@ public class PlayerInteractable : MonoBehaviour
     public UnityEvent onInteractSuccess;
     public UnityEvent onInteractFail;
 
-    public void Interact()
+    public virtual void Interact()
     {
         if (isOneTimeUse && isUsed)
             return;

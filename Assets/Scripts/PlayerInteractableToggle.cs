@@ -18,7 +18,7 @@ public class PlayerInteractableToggle : PlayerInteractable
         else
             TurnOff();
 
-        base.InteractSuccess();
+        base.Interact();
     }
 
     public virtual void TurnOn()
