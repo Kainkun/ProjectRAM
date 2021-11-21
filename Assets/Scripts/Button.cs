@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Button : PlayerInteractable
 {
-    
+    public Transform buttonTransform;
 }
