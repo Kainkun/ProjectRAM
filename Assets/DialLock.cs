@@ -23,11 +23,20 @@ public class DialLock : MonoBehaviour
     private void Start()
     {
         foreach (DialPasswordPair dialPasswordPair in dialPasswordPairs)
+        {
             dialPasswordPair.dial.onInteract.AddListener(CheckLock);
+            dialPasswordPair.dial.onInteractFinish.AddListener(onUnlockDelay);
+        }
 
         CheckLock();
     }
 
+    public void onUnlockDelay()
+    {
+        if(!isLocked)
+            onUnlock.Invoke();
+    }
+    
     public void CheckLock()
     {
         foreach (DialPasswordPair dialPasswordPair in dialPasswordPairs)
@@ -56,7 +65,6 @@ public class DialLock : MonoBehaviour
         if (isLocked)
         {
             isLocked = false;
-            onUnlock.Invoke();
         }
     }
 }
