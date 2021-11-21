@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hydraulic : PlayerInteractableToggle
+public class Hydraulic : MonoBehaviour
 {
+    public bool isOn;
     Vector3 startPosition;
-    public Vector3 travelDistance = new Vector3(0,2.5f,0);
+    public Vector3 endPosition = new Vector3(0,2.5f,0);
     public float travelTime = 0.3f;
     float travelSpeed;
     public Transform piston;
@@ -14,41 +15,45 @@ public class Hydraulic : PlayerInteractableToggle
     
     private void Start()
     {
-        travelSpeed = (1 / travelTime) * travelDistance.magnitude;
+        travelSpeed = (1 / travelTime) * (startPosition - endPosition).magnitude;
         
         startPosition = piston.localPosition;
 
         if (isOn)
-            piston.localPosition = travelDistance;
+            piston.localPosition = endPosition;
     }
 
-    public override void TurnOn()
+    public void Toggle()
     {
-        print("ON");
+        isOn = !isOn;
+        if(isOn)
+            TurnOn();
+        else
+            TurnOff();
+    }
+
+    public void TurnOn()
+    {
         if(currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(CR_TurnOn());
-        base.TurnOn();
     }
 
-    public override void TurnOff()
+    public void TurnOff()
     {
-        print("OFF");
         if(currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(CR_TurnOff());
-        base.TurnOff();
     }
     
     IEnumerator CR_TurnOn()
     {
-        //while (piston.localPosition.y < startPosition + travelDistance)
-        while (Vector3.Distance(piston.localPosition, startPosition + travelDistance) > 0.01f)
+        while (Vector3.Distance(piston.localPosition,endPosition) > 0.01f)
         {
-            piston.localPosition = Vector3.MoveTowards(piston.localPosition, startPosition + travelDistance, Time.deltaTime * travelSpeed);
+            piston.localPosition = Vector3.MoveTowards(piston.localPosition,endPosition, Time.deltaTime * travelSpeed);
             yield return null;
         }
-        piston.localPosition = startPosition + travelDistance;
+        piston.localPosition = endPosition;
     }
 
     IEnumerator CR_TurnOff()

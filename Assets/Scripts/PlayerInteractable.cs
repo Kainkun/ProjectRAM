@@ -6,15 +6,39 @@ using UnityEngine.Events;
 public class PlayerInteractable : MonoBehaviour
 {
     public bool isOneTimeUse;
-    private bool hasBeenUsed;
-    public UnityEvent onInteract;
+    private bool isUsed;
+    public Collectable.CollectableNames[] requiredCollectables;
+    public UnityEvent onInteractSuccess;
+    public UnityEvent onInteractFail;
 
-    public virtual void Interact()
+    public void Interact()
     {
-        if (isOneTimeUse && hasBeenUsed)
+        if (isOneTimeUse && isUsed)
             return;
+    
+
+        foreach (Collectable.CollectableNames requiredCollectable in requiredCollectables)
+        {
+            if (!Collectable.collectedCollectables.Contains(requiredCollectable))
+            {
+                InteractFail();
+                onInteractFail.Invoke();
+                return;
+            }
+        }
+
+        InteractSuccess();
+        onInteractSuccess.Invoke();
+        isUsed = true;
+    }
+
+    public virtual void InteractSuccess()
+    {
         
-        onInteract.Invoke();
-        hasBeenUsed = true;
+    }
+
+    public virtual void InteractFail()
+    {
+        
     }
 }

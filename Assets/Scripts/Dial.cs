@@ -24,7 +24,7 @@ public class Dial : PlayerInteractable
         targetRotation = dial.localEulerAngles.z % 360;
     }
 
-    public override void Interact()
+    public override void InteractSuccess()
     {
         if(currentCoroutine != null)
             StopCoroutine(currentCoroutine);
@@ -36,7 +36,7 @@ public class Dial : PlayerInteractable
         targetPosition = (targetPosition + 1) % totalPositions;
         targetRotation = targetPosition * (360f / totalPositions);
         currentPosition = targetPosition;
-        base.Interact();
+        base.InteractSuccess();
         
         var r = dial.localEulerAngles;
         while (Mathf.Abs(Mathf.DeltaAngle(dial.localEulerAngles.z,targetRotation)) > 0.1f)

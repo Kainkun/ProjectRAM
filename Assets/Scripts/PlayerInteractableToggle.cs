@@ -9,7 +9,7 @@ public class PlayerInteractableToggle : PlayerInteractable
     public UnityEvent onTurnOn;
     public UnityEvent onTurnOff;
 
-    public override void Interact()
+    public override void InteractSuccess()
     {
         isOn = !isOn;
 
@@ -18,7 +18,7 @@ public class PlayerInteractableToggle : PlayerInteractable
         else
             TurnOff();
 
-        base.Interact();
+        base.InteractSuccess();
     }
 
     public virtual void TurnOn()

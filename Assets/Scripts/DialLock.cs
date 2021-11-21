@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 public class DialLock : MonoBehaviour
 {
+    public bool zeroBasedNumbering = true;
     [System.Serializable]
     public struct DialPasswordPair
     {
@@ -24,7 +25,7 @@ public class DialLock : MonoBehaviour
     {
         foreach (DialPasswordPair dialPasswordPair in dialPasswordPairs)
         {
-            dialPasswordPair.dial.onInteract.AddListener(CheckLock);
+            dialPasswordPair.dial.onInteractSuccess.AddListener(CheckLock);
             dialPasswordPair.dial.onInteractFinish.AddListener(onUnlockDelay);
         }
 
@@ -44,7 +45,7 @@ public class DialLock : MonoBehaviour
             bool foundCorrectPosition = false;
             foreach (int unlockPosition in dialPasswordPair.unlockPositions)
             {
-                if (dialPasswordPair.dial.currentPosition == unlockPosition)
+                if (dialPasswordPair.dial.currentPosition == (zeroBasedNumbering ? unlockPosition : unlockPosition - 1))
                 {
                     foundCorrectPosition = true;
                 }
