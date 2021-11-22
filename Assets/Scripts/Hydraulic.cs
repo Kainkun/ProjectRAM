@@ -34,6 +34,7 @@ public class Hydraulic : MonoBehaviour
 
     public void TurnOn()
     {
+        isOn = true;
         if(currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(CR_TurnOn());
@@ -41,6 +42,7 @@ public class Hydraulic : MonoBehaviour
 
     public void TurnOff()
     {
+        isOn = false;
         if(currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(CR_TurnOff());

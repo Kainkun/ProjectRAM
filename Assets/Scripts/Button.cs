@@ -17,7 +17,6 @@ public class Button : PlayerInteractable
         startPosition = buttonTransform.localPosition;
         
         travelSpeed = (1 / travelTime) * (startPosition - endPosition).magnitude;
-        print(travelSpeed);
     }
 
     public override void Interact()

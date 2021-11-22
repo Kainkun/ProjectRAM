@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class DestructableBox : MonoBehaviour
 {
+    public float delay;
     private void OnCollisionEnter(Collision other)
     {
         if(other.gameObject.tag == "Crusher")
@@ -16,7 +17,7 @@ public class DestructableBox : MonoBehaviour
 
     private IEnumerator CR_Destroy()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(delay);
         var ps = transform.GetChild(0).GetComponent<ParticleSystem>();
         ps.transform.parent = null;
         ps.Play();
