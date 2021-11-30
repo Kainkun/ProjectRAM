@@ -28,8 +28,6 @@ public class DialogueManager : MonoBehaviour
         dialogueTrigger.dialogueClass.storyText.text = dialogueTrigger.dialogueClass.sentences[0];
         #endregion
 
-        dialogue = new Queue<string>();
-
         //sets text color in order to control alpha
         #region
         dialogueTrigger.dialogueClass.color.a = 0;
