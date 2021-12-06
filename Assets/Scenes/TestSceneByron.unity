@@ -868,9 +868,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3812304116874046965, guid: 7b81414e068843845bdbe3707c08d490, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3812304116874046966, guid: 7b81414e068843845bdbe3707c08d490, type: 3}
+      propertyPath: soundClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3812304116874046966, guid: 7b81414e068843845bdbe3707c08d490, type: 3}
       propertyPath: dialogueClass.storyText
       value: 
       objectReference: {fileID: 55932436}
+    - target: {fileID: 3812304116874046966, guid: 7b81414e068843845bdbe3707c08d490, type: 3}
+      propertyPath: dialogueClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3812304116874046966, guid: 7b81414e068843845bdbe3707c08d490, type: 3}
+      propertyPath: soundClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 53e7968e9824c86479a9e07e520b41d4, type: 3}
+    - target: {fileID: 3812304116874046966, guid: 7b81414e068843845bdbe3707c08d490, type: 3}
+      propertyPath: dialogueClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c7f9005e798d73244b82674787faffe3, type: 3}
+    - target: {fileID: 3812304116874046967, guid: 7b81414e068843845bdbe3707c08d490, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b81414e068843845bdbe3707c08d490, type: 3}

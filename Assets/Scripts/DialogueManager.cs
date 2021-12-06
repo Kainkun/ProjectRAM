@@ -25,13 +25,13 @@ public class DialogueManager : MonoBehaviour
         #region
         dialogueTrigger = GetComponent<DialogueTrigger>();
         dialogueSource = GetComponent<AudioSource>();
-        dialogueTrigger.dialogueClass.storyText.text = dialogueTrigger.dialogueClass.sentences[0];
+        dialogueTrigger.storyText.text = dialogueTrigger.sentences[0];
         #endregion
 
         //sets text color in order to control alpha
         #region
-        dialogueTrigger.dialogueClass.color.a = 0;
-        dialogueTrigger.dialogueClass.storyText.color = dialogueTrigger.dialogueClass.color;
+        dialogueTrigger.color.a = 0;
+        dialogueTrigger.storyText.color = dialogueTrigger.color;
         StartCoroutine(FadeInText());
         StartCoroutine(FadeOutText());
         #endregion
@@ -63,32 +63,32 @@ public class DialogueManager : MonoBehaviour
     */
     void PlayClip1()
     {
-        dialogueSource.clip = dialogueTrigger.dialogueClass.soundClips[0];
+        dialogueSource.clip = dialogueTrigger.dialogueClips[0];
         dialogueSource.Play();
         print("it played");
     }
 
     void PlayClip2()
     {
-        dialogueSource.clip = dialogueTrigger.dialogueClass.soundClips[1];
+        dialogueSource.clip = dialogueTrigger.dialogueClips[1];
         dialogueSource.Play();
     }
 
     void PlayClip3()
     {
-        dialogueSource.clip = dialogueTrigger.dialogueClass.soundClips[2];
+        dialogueSource.clip = dialogueTrigger.dialogueClips[2];
         dialogueSource.Play();
     }
 
     void PlayClip4()
     {
-        dialogueSource.clip = dialogueTrigger.dialogueClass.soundClips[3];
+        dialogueSource.clip = dialogueTrigger.dialogueClips[3];
         dialogueSource.Play();
     }
 
     public void PlayClip5()
     {
-        dialogueSource.clip = dialogueTrigger.dialogueClass.soundClips[4];
+        dialogueSource.clip = dialogueTrigger.dialogueClips[4];
         dialogueSource.Play();
     }
     #endregion
@@ -100,11 +100,11 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
 
-        while (dialogueTrigger.dialogueClass.color.a < 1)
+        while (dialogueTrigger.color.a < 1)
         {
             t += 0.001f;
-            dialogueTrigger.dialogueClass.color.a = Mathf.Lerp(0f, 1f, t);
-            dialogueTrigger.dialogueClass.storyText.color = dialogueTrigger.dialogueClass.color;
+            dialogueTrigger.color.a = Mathf.Lerp(0f, 1f, t);
+            dialogueTrigger.storyText.color = dialogueTrigger.color;
             //Debug.Log(color.a);
             //Debug.Log(t);
         }
@@ -115,16 +115,16 @@ public class DialogueManager : MonoBehaviour
     {
         yield return new WaitForSeconds(10f);
 
-        while (dialogueTrigger.dialogueClass.color.a > 0)
+        while (dialogueTrigger.color.a > 0)
         {
             t += 0.001f;
-            dialogueTrigger.dialogueClass.color.a = Mathf.Lerp(1f, 0f, t);
-            dialogueTrigger.dialogueClass.storyText.color = dialogueTrigger.dialogueClass.color;
+            dialogueTrigger.color.a = Mathf.Lerp(1f, 0f, t);
+            dialogueTrigger.storyText.color = dialogueTrigger.color;
             //Debug.Log(color.a);
             //Debug.Log(t);
         }
-        dialogueTrigger.dialogueClass.textCount++;
-        if (dialogueTrigger.dialogueClass.textCount < 5)
+        dialogueTrigger.textCount++;
+        if (dialogueTrigger.textCount < 5)
         {
             StartCoroutine(SwitchText());
         }
@@ -132,31 +132,31 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator SwitchText()
     {
-        switch (dialogueTrigger.dialogueClass.textCount)
+        switch (dialogueTrigger.textCount)
         {
             case 1:
                 yield return new WaitForSeconds(11);
-                dialogueTrigger.dialogueClass.color.a = 0;
-                dialogueTrigger.dialogueClass.storyText.color = dialogueTrigger.dialogueClass.color;
-                dialogueTrigger.dialogueClass.storyText.text = dialogueTrigger.dialogueClass.sentences[1];
+                dialogueTrigger.color.a = 0;
+                dialogueTrigger.storyText.color = dialogueTrigger.color;
+                dialogueTrigger.storyText.text = dialogueTrigger.sentences[1];
                 StartCoroutine(FadeInText());
                 StartCoroutine(FadeOutText());
                 break;
 
             case 2:
                 yield return new WaitForSeconds(11);
-                dialogueTrigger.dialogueClass.color.a = 0;
-                dialogueTrigger.dialogueClass.storyText.color = dialogueTrigger.dialogueClass.color;
-                dialogueTrigger.dialogueClass.storyText.text = dialogueTrigger.dialogueClass.sentences[2];
+                dialogueTrigger.color.a = 0;
+                dialogueTrigger.storyText.color = dialogueTrigger.color;
+                dialogueTrigger.storyText.text = dialogueTrigger.sentences[2];
                 StartCoroutine(FadeInText());
                 StartCoroutine(FadeOutText());
                 break;
 
             case 3:
                 yield return new WaitForSeconds(22);
-                dialogueTrigger.dialogueClass.color.a = 0;
-                dialogueTrigger.dialogueClass.storyText.color = dialogueTrigger.dialogueClass.color;
-                dialogueTrigger.dialogueClass.storyText.text = dialogueTrigger.dialogueClass.sentences[3];
+                dialogueTrigger.color.a = 0;
+                dialogueTrigger.storyText.color = dialogueTrigger.color;
+                dialogueTrigger.storyText.text = dialogueTrigger.sentences[3];
                 StartCoroutine(FadeInText());
                 StartCoroutine(FadeOutText());
                 break;
@@ -168,9 +168,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (other.gameObject.tag == "MysteriousObject")
         {
-            dialogueTrigger.dialogueClass.color.a = 0;
-            dialogueTrigger.dialogueClass.storyText.color = dialogueTrigger.dialogueClass.color;
-            dialogueTrigger.dialogueClass.storyText.text = dialogueTrigger.dialogueClass.sentences[4];
+            dialogueTrigger.color.a = 0;
+            dialogueTrigger.storyText.color = dialogueTrigger.color;
+            dialogueTrigger.storyText.text = dialogueTrigger.sentences[4];
             StartCoroutine(FadeInText());
             StartCoroutine(FadeOutText());
             Invoke("PlayClip5", 5);
