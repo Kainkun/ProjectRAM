@@ -1,3 +1,4 @@
+using Configs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,21 +16,25 @@ public class PlayerInteractable : MonoBehaviour
     {
         if (isOneTimeUse && isUsed)
             return;
-    
 
-        foreach (Collectable.CollectableNames requiredCollectable in requiredCollectables)
+        if (!MeetsRequirements())
         {
-            if (!Collectable.collectedCollectables.Contains(requiredCollectable))
-            {
-                InteractFail();
-                onInteractFail.Invoke();
-                return;
-            }
+            InteractFail();
+            onInteractFail.Invoke();
+            return;
         }
 
         InteractSuccess();
         onInteractSuccess.Invoke();
         isUsed = true;
+    }
+
+    public virtual bool MeetsRequirements()
+    {
+        foreach (Collectable.CollectableNames requiredCollectable in requiredCollectables)
+            if (!Collectable.collectedCollectables.Contains(requiredCollectable))
+                return false;
+        return true;
     }
 
     public virtual void InteractSuccess()
