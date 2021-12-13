@@ -44,12 +44,13 @@ namespace Game
 
         }
 
-
+#if UNITY_EDITOR
         // Debug power state
         void OnDrawGizmosSelected()
         {
             string output = "State: " + (_on?"On":"Off") + "\nPower: " + _power.ToString("n2");
             Handles.Label(transform.position, output);
         }
+#endif
     }
 }
