@@ -1,7 +1,6 @@
 Shader "Hidden/Shader/ScreenAdderVolume"
 {
     HLSLINCLUDE
-
     #pragma target 4.5
     #pragma only_renderers d3d11 playstation xboxone xboxseries vulkan metal switch
 
@@ -20,7 +19,7 @@ Shader "Hidden/Shader/ScreenAdderVolume"
     struct Varyings
     {
         float4 positionCS : SV_POSITION;
-        float2 texcoord   : TEXCOORD0;
+        float2 texcoord : TEXCOORD0;
         UNITY_VERTEX_OUTPUT_STEREO
     };
 
@@ -39,6 +38,8 @@ Shader "Hidden/Shader/ScreenAdderVolume"
     TEXTURE2D_X(_InputTexture);
     sampler2D _TextureToAdd;
 
+
+
     float4 CustomPostProcess(Varyings input) : SV_Target
     {
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
@@ -46,11 +47,15 @@ Shader "Hidden/Shader/ScreenAdderVolume"
         uint2 positionSS = input.texcoord * _ScreenSize.xy;
         float3 inColor = LOAD_TEXTURE2D_X(_InputTexture, positionSS).rgb;
         float3 textureToAdd = tex2D(_TextureToAdd, input.texcoord).rgb;
-        float3 outColor = inColor * (1 - _Intensity) + textureToAdd.rgb * _Intensity * 10;
+
+
+        
+        //float3 outColor = saturate(inColor + textureToAdd.rgb);
+        //float3 outColor = saturate(inColor - 20 * min(0.01, textureToAdd.rgb) * _Intensity) + textureToAdd.rgb * _Intensity;
+        float3 outColor = inColor + textureToAdd.rgb * _Intensity;
 
         return float4(outColor, 1);
     }
-
     ENDHLSL
 
     SubShader
@@ -65,8 +70,8 @@ Shader "Hidden/Shader/ScreenAdderVolume"
             Cull Off
 
             HLSLPROGRAM
-                #pragma fragment CustomPostProcess
-                #pragma vertex Vert
+            #pragma fragment CustomPostProcess
+            #pragma vertex Vert
             ENDHLSL
         }
     }

@@ -23,8 +23,9 @@ public class ArScreenRenderTextureSetter : MonoBehaviour
         
         rt.dimension = TextureDimension.Tex2D;
         rt.antiAliasing = 1;
-        rt.format = RenderTextureFormat.Default;
-        rt.graphicsFormat = GraphicsFormat.R8G8B8A8_UNorm;
+        rt.format = RenderTextureFormat.ARGBHalf;
+        //rt.graphicsFormat = GraphicsFormat.R8G8B8A8_UNorm;
+        rt.graphicsFormat = GraphicsFormat.R16G16B16A16_SFloat;
         rt.depth = 0;
         rt.useMipMap = false;
         rt.useDynamicScale = false;
@@ -46,7 +47,6 @@ public class ArScreenRenderTextureSetter : MonoBehaviour
     {
         if (_resolution.x != Screen.width || _resolution.y != Screen.height)
         {
-            print("adsadsad");
             _resolution.x = Screen.width;
             _resolution.y = Screen.height;
 

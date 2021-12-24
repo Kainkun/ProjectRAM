@@ -9,8 +9,9 @@ public sealed class ScreenAdderVolume : CustomPostProcessVolumeComponent, IPostP
 {
     [Tooltip("Controls the intensity of the effect.")]
     public ClampedFloatParameter intensity = new ClampedFloatParameter(0f, 0f, 1f);
+    //public TextureParameter textureToAdd = new TextureParameter(null);
     public static TextureParameter textureToAdd = new TextureParameter(null);
-
+    
     public static void SetTextureToAdd(RenderTexture texture)
     {
         textureToAdd.value = texture;
@@ -21,7 +22,7 @@ public sealed class ScreenAdderVolume : CustomPostProcessVolumeComponent, IPostP
     public bool IsActive() => m_Material != null && intensity.value > 0f;
 
     // Do not forget to add this post process in the Custom Post Process Orders list (Project Settings > HDRP Default Settings).
-    public override CustomPostProcessInjectionPoint injectionPoint => CustomPostProcessInjectionPoint.AfterPostProcess;
+    public override CustomPostProcessInjectionPoint injectionPoint => CustomPostProcessInjectionPoint.BeforePostProcess;
 
     const string kShaderName = "Hidden/Shader/ScreenAdderVolume";
 
