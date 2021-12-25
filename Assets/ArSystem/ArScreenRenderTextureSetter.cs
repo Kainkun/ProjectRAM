@@ -7,12 +7,12 @@ using UnityEngine.Rendering;
 [ExecuteInEditMode]
 public class ArScreenRenderTextureSetter : MonoBehaviour
 {
-    public VolumeProfile screenAdderVolumeProfile;
-    public Camera arCamera;
+    private Camera arCamera;
     private Vector2Int _resolution;
     private int resolutionDivisor = 4;
     void Start()
     {
+        arCamera = GetComponent<Camera>();
         _resolution = new Vector2Int(Screen.width, Screen.height);
         SetRenderTexture();
     }
